@@ -1,0 +1,25 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+{
+  "name": "build_keyball",
+  
+  "build": {
+    "dockerfile": "Dockerfile",
+    "args": {
+      "QMK_TAG": "0.22.14",
+      "QMK_PATH": "__qmk__"
+    }
+  },
+
+  "workspaceFolder": "/__qmk__/keyboards",
+  "workspaceMount": "source=${localWorkspaceFolder}/qmk_firmware/keyboards/keyball,target=/__qmk__/keyboards/keyball,type=bind,consistency=cached",
+  "mounts": [
+    "source=${localWorkspaceFolder}/qmk_firmware/.build,target=/__qmk__/keyboards/release,type=bind,consistency=cached",
+    "source=${localWorkspaceFolder}/bin/devcontainer/qmkb.sh,target=/usr/local/bin/qmkb,type=bind,consistency=cached"
+  ],
+
+  "remoteEnv": {
+    "WORKSPACE_FOLDER": "${containerWorkspaceFolder}",
+    "BUILD_DEF_KB": "keyball/keyball39",
+    "BUILD_DEF_KM": "default"
+  },
+}
