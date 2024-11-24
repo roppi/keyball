@@ -42,6 +42,8 @@ jobs:
             keymap:   via_Both
           - keyboard: keyball44
             keymap:   rkb_qwe
+          - keyboard: keyball44
+            keymap:   rkb_ons
 
     uses: ./.github/workflows/build-firmware.yml
     with:
