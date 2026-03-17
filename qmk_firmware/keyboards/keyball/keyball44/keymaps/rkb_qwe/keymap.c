@@ -40,13 +40,13 @@ enum _layers {
 
 // Key Overrides
 // ----------------------------------------------------------------------
-const key_override_t KO_BS_DEL    = ko_make_with_layers(MOD_MASK_SHIFT, KC_BSPC, KC_DEL, ~0);
+const key_override_t KO_BS_DEL    = ko_make_with_layers(MOD_MASK_CTRL, KC_BSPC, KC_DEL, ~0);
 const key_override_t KO_COMM_LPRN = ko_make_with_layers(MOD_MASK_SHIFT, KC_COMM, JP_LPRN, 1 << _BASE);
 const key_override_t KO_DOT_RPRN  = ko_make_with_layers(MOD_MASK_SHIFT, KC_DOT, JP_RPRN, 1 << _BASE);
-const key_override_t KO_SLSH_AT   = ko_make_with_layers(MOD_MASK_SHIFT, JP_SLSH, JP_AT, 1 << _BASE);
+const key_override_t KO_SLSH_AT   = ko_make_with_layers(MOD_MASK_SHIFT, JP_SLSH, JP_AT, ~0);
 const key_override_t KO_MINS_UNDS = ko_make_with_layers(MOD_MASK_SHIFT, JP_MINS, JP_UNDS, 1 << _BASE);
-const key_override_t KO_SCLN_COLN = ko_make_with_layers(MOD_MASK_SHIFT, JP_SCLN, JP_COLN, 1 << _BASE);
-const key_override_t KO_QUOT_WQUO = ko_make_with_layers_and_negmods(0,  JP_2, JP_QUOT , 1 << _BASE, MOD_MASK_SHIFT);
+const key_override_t KO_SCLN_COLN = ko_make_with_layers(MOD_MASK_SHIFT, JP_SCLN, JP_COLN, ~0);
+const key_override_t KO_QUOT_WQUO = ko_make_with_layers_and_negmods(0,  JP_2, JP_QUOT , ~0, MOD_MASK_SHIFT);
 const key_override_t KO_QUES_EXLM = ko_make_with_layers_and_negmods(0,  JP_1, JP_QUES , 1 << _BASE, MOD_MASK_SHIFT);
 
 // This globally defines all key overrides to be used
@@ -70,7 +70,7 @@ const key_override_t **key_overrides = (const key_override_t *[]){
 #define KA_SPC_CTL LCTL_T(KC_SPC)       // Space / Hold: Ctrl
 #define KA_JP_L  LT(_MACRO, KC_LNG1)     // かな / Hold: Macro Layer
 #define KA_ENT_L LT(_NUM_MOUSE, KC_ENT) // Enter / Hold: Change Layer
-#define KA_PS_L  LT(_KB_CONF, KC_PSCR)  // PrintScreen / Hold: Keboard Config Layer
+#define KA_APP_L  LT(_KB_CONF, KC_APP)  // ContextMenu / Hold: Keboard Config Layer
 
 // ======================================================================
 // Keymap
@@ -79,23 +79,23 @@ const key_override_t **key_overrides = (const key_override_t *[]){
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT_right_ball(
 // +----------+----------+----------+----------+----------+----------+                                              +----------+----------+----------+----------+----------+----------+
-    KA_ESC_L  ,KC_Q      ,KC_W      ,KC_E      ,KC_R      ,KC_T      ,                                               KC_Y      ,KC_U      ,KC_I      ,KC_O      ,KC_P      ,JP_SLSH   ,
+    KA_ESC_L  ,KC_Q      ,KC_W      ,KC_E      ,KC_R      ,KC_T      ,                                               KC_Y      ,KC_U      ,KC_I      ,KC_O      ,KC_P      ,JP_2      ,
 // +----------+----------+----------+----------+----------+----------+                                              +----------+----------+----------+----------+----------+----------+
-    KA_TAB_L  ,KC_A      ,KC_S      ,KC_D      ,KC_F      ,KC_G      ,                                               KC_H      ,KC_J      ,KC_K      ,KC_L      ,JP_2      ,JP_SCLN   ,
+    KA_TAB_L  ,KC_A      ,KC_S      ,KC_D      ,KC_F      ,KC_G      ,                                               KC_H      ,KC_J      ,KC_K      ,KC_L      ,KC_MINS   ,JP_SCLN   ,
 // +----------+----------+----------+----------+----------+----------+                                              +----------+----------+----------+----------+----------+----------+
-    KC_LSFT   ,KC_Z      ,KC_X      ,KC_C      ,KC_V      ,KC_B      ,                                               KC_N      ,KC_M      ,KC_COMM   ,KC_DOT    ,KC_MINS   ,JP_1      ,
+    KC_LSFT   ,KC_Z      ,KC_X      ,KC_C      ,KC_V      ,KC_B      ,                                               KC_N      ,KC_M      ,KC_COMM   ,KC_DOT    ,JP_1      ,JP_SLSH   ,
 // +----------+----------+----------+----------+------+---+------+---+------+----------+          +----------+------+---+------+----------+----------+----------+----------+----------+
-                          KC_LALT   ,KC_LGUI   ,       KA_EN_L   ,KA_SPC_CTL,KA_JP_L   ,           KC_BSPC   ,KA_ENT_L  ,                                        KA_PS_L
+                          KC_LGUI   ,KC_LALT   ,       KA_EN_L   ,KA_SPC_CTL,KA_JP_L   ,           KC_BSPC   ,KA_ENT_L  ,                                        KA_APP_L
 //                       +----------+----------+      +----------+----------+----------+          +----------+----------+                                       +----------+
   ),
 
   [_NUM_MOUSE] = LAYOUT_right_ball(
 // +----------+----------+----------+----------+----------+----------+                                              +----------+----------+----------+----------+----------+----------+
-    _______   ,JP_EQL    ,KC_KP_7   ,KC_KP_8   ,KC_KP_9   ,KC_KP_MINUS,                                              AML_TO    ,AML_I50   ,AML_D50   ,CPI_I100  ,CPI_D100  ,SSNP_VRT  ,
+    _______,KC_KP_ASTERISK,KC_KP_7  ,KC_KP_8   ,KC_KP_9   ,KC_KP_PLUS,                                               KC_MUTE   ,KC_VOLU   ,KC_VOLD   ,KC_BRIU   ,KC_BRID   ,SSNP_VRT  ,
 // +----------+----------+----------+----------+----------+----------+                                              +----------+----------+----------+----------+----------+----------+
-    _______   ,KC_KP_PLUS,KC_KP_4   ,KC_KP_5   ,KC_KP_6   ,KC_KP_ASTERISK,                                           KC_PGUP   ,KC_BTN1   ,KC_BTN3   ,KC_BTN2   ,SCRL_MO   ,SSNP_HOR  ,
+    _______ ,KC_KP_SLASH ,KC_KP_4   ,KC_KP_5   ,KC_KP_6   ,KC_KP_MINUS,                                              KC_PGUP   ,KC_BTN1   ,KC_BTN3   ,KC_BTN2   ,SCRL_MO   ,SSNP_HOR  ,
 // +----------+----------+----------+----------+----------+----------+                                              +----------+----------+----------+----------+----------+----------+
-    _______   ,KC_KP_0   ,KC_KP_1   ,KC_KP_2   ,KC_KP_3   ,KC_KP_SLASH,                                              KC_PGDN   ,KC_LEFT   ,KC_DOWN   ,KC_UP     ,KC_RGHT   ,SSNP_FRE  ,
+    _______   ,KC_KP_0   ,KC_KP_1   ,KC_KP_2   ,KC_KP_3   ,KC_PEQL   ,                                               KC_PGDN   ,KC_LEFT   ,KC_DOWN   ,KC_UP     ,KC_RGHT   ,SSNP_FRE  ,
 // +----------+----------+----------+----------+------+---+------+---+------+----------+          +----------+------+---+------+----------+----------+----------+----------+----------+
                           _______   ,_______   ,       _______   ,_______   ,_______   ,           _______   ,_______   ,                                        _______
 //                       +----------+----------+      +----------+----------+----------+          +----------+----------+                                       +----------+
@@ -103,11 +103,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_FN_SIGN] = LAYOUT_right_ball(
 // +----------+----------+----------+----------+----------+----------+                                              +----------+----------+----------+----------+----------+----------+
-    _______   ,KC_F1     ,KC_F2     ,KC_F3     ,KC_F4     ,JP_LCBR   ,                                               JP_RCBR   ,JP_AMPR   ,JP_ASTR   ,JP_DLR    ,JP_GRV    ,JP_AT     ,
+    _______   ,KC_F1     ,KC_F2     ,KC_F3     ,KC_F4     ,JP_LCBR   ,                                               JP_RCBR   ,JP_2      ,JP_GRV    ,JP_ASTR   ,JP_PERC   ,_______   ,
 // +----------+----------+----------+----------+----------+----------+                                              +----------+----------+----------+----------+----------+----------+
-    _______   ,KC_F5     ,KC_F6     ,KC_F7     ,KC_F8     ,JP_LBRC   ,                                               JP_RBRC   ,JP_HASH   ,JP_CIRC   ,JP_YEN    ,_______   ,_______   ,
+    _______   ,KC_F5     ,KC_F6     ,KC_F7     ,KC_F8     ,JP_LBRC   ,                                               JP_RBRC   ,JP_SCLN   ,JP_HASH   ,JP_DLR    ,JP_AMPR   ,_______   ,
 // +----------+----------+----------+----------+----------+----------+                                              +----------+----------+----------+----------+----------+----------+
-    _______   ,KC_F9     ,KC_F10    ,KC_F11    ,KC_F12    ,JP_LABK   ,                                               JP_RABK   ,JP_SLSH   ,_______   ,_______   ,_______   ,_______   ,
+    _______   ,KC_F9     ,KC_F10    ,KC_F11    ,KC_F12    ,JP_LABK   ,                                               JP_RABK   ,JP_SLSH   ,JP_YEN    ,JP_CIRC   ,JP_TILD   ,_______   ,
 // +----------+----------+----------+----------+------+---+------+---+------+----------+          +----------+------+---+------+----------+----------+----------+----------+----------+
                           _______   ,_______   ,       _______   ,_______   ,_______   ,           _______   ,_______   ,                                        _______
 //                       +----------+----------+      +----------+----------+----------+          +----------+----------+                                       +----------+
@@ -151,13 +151,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_KB_CONF] = LAYOUT_right_ball(
 // +----------+----------+----------+----------+----------+----------+                                              +----------+----------+----------+----------+----------+----------+
-    RGB_TOG   ,AML_TO    ,AML_I50   ,AML_D50   ,_______   ,_______   ,                                               RGB_M_P   ,RGB_M_B   ,RGB_M_R   ,RGB_M_SW  ,RGB_M_SN  ,RGB_M_K   ,
+    QK_BOOT   ,AML_TO    ,SSNP_VRT  ,SSNP_HOR  ,SSNP_FRE  ,_______   ,                                               _______   ,RGB_TOG   ,RGB_M_P   ,RGB_M_B   ,RGB_M_G   ,_______   ,
 // +----------+----------+----------+----------+----------+----------+                                              +----------+----------+----------+----------+----------+----------+
-    RGB_MOD   ,RGB_HUI   ,RGB_SAI   ,RGB_VAI   ,_______   ,SCRL_DVI  ,                                               RGB_M_X   ,RGB_M_G   ,RGB_M_T   ,RGB_M_TW  ,_______   ,_______   ,
+    KBC_RST   ,AML_I50   ,SCRL_DVI  ,CPI_I100  ,CPI_I1K   ,_______   ,                                               _______   ,RGB_MOD   ,RGB_HUI   ,RGB_SAI   ,RGB_VAI   ,_______   ,
 // +----------+----------+----------+----------+----------+----------+                                              +----------+----------+----------+----------+----------+----------+
-    RGB_RMOD  ,RGB_HUD   ,RGB_SAD   ,RGB_VAD   ,_______   ,SCRL_DVD  ,                                               CPI_D1K   ,CPI_D100  ,CPI_I100  ,CPI_I1K   ,_______   ,KBC_SAVE  ,
+    KBC_SAVE  ,AML_D50   ,SCRL_DVD  ,CPI_D100  ,CPI_D1K   ,_______   ,                                               _______   ,RGB_RMOD  ,RGB_HUD   ,RGB_SAD   ,RGB_VAD   ,_______   ,
 // +----------+----------+----------+----------+------+---+------+---+------+----------+          +----------+------+---+------+----------+----------+----------+----------+----------+
-                          QK_BOOT   ,KBC_RST   ,       _______   ,_______   ,_______   ,           _______   ,_______   ,                                        QK_BOOT
+                          _______   ,_______   ,       _______   ,_______   ,_______   ,           _______   ,_______   ,                                        _______
 //                       +----------+----------+      +----------+----------+----------+          +----------+----------+                                       +----------+
   ),
 };
